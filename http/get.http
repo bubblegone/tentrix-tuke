@@ -1,0 +1,5 @@
+GET http://localhost:8080/api/comment/tentrix
+
+###
+
+GET http://localhost:8080/api/score/tentrix

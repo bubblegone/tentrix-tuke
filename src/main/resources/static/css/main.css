@@ -1,0 +1,206 @@
+:root {
+    --black: #121212;
+    font-size: 1.6rem;
+}
+
+body {
+    background-color: var(--black);
+    color: white;
+    margin: 0 max(1rem, 15%);
+}
+
+h1 {
+    font-size: 2.4rem;
+    text-align: center;
+    margin: 0 0 1.5rem 0;
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+h2 a {
+    padding: 0.7rem;
+    border: white solid 2px;
+}
+
+h3 {
+    font-size: 2.2rem;
+    text-align: center;
+    padding: 0 0 2rem 0;
+    margin: 0;
+}
+
+h4 {
+    font-size: 1.6rem;
+    padding: 0.5rem;
+    margin: 0;
+    text-align: center;
+}
+
+button {
+    font-size: 1.6rem;
+    background-color: #121212;
+    color: white;
+    border: white solid 1px;
+    width: 100%;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: white;
+}
+
+#userControls {
+    padding-top: 1rem;
+    display: flex;
+}
+
+#userControls > *{
+    width: 100%;
+    border: white solid 1px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1rem 0;
+}
+
+#score{
+    padding: 0.5rem;
+}
+
+#finished-score {
+    padding: 0.5rem;
+    background-color: red;
+    color: #121212;
+}
+
+#game {
+    display: flex;
+    transition: opacity 0.2s;
+}
+
+#game > * {
+    flex-grow: 1;
+}
+
+#game table {
+    border: 2px solid white;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+#game td {
+    border: 1px solid var(--black);
+    #height: 3ch;
+    #width: 3ch;
+    height: 32px;
+    width: 32px;
+}
+
+#game td a {
+    display: inline-block;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#field {
+    display: flex;
+    justify-content: center;
+}
+
+#controls {
+    flex-direction: column;
+}
+
+#state {
+    margin-top: 0;
+}
+
+#figures {
+    display: flex;
+    justify-content: center;
+}
+
+#controls table {
+    margin: 0 0.5rem;
+}
+
+#currentFigure {
+    display: flex;
+    justify-content: center;
+}
+
+#currentFigure table{
+    margin: 0 auto;
+}
+
+#currentFigure h3 {
+    padding: 0.5rem 0;
+}
+
+.bg-black {
+    background-color: var(--black);
+}
+
+.bg-white{
+    background-color: white;
+}
+
+.bg-red {
+    background-color: red;
+}
+
+#target{
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
+    top: 1rem;
+    left: max(1rem, 15%);
+    width: calc(100% - max(1rem, 15%) * 2);
+    min-height: calc(100% - 2rem);
+    background-color: #121212;
+    border: white solid 1px;
+    transition: opacity 0.1s;
+}
+
+#target > *{
+    padding: 1rem;
+}
+
+#target table {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+td,
+th {
+    text-align: center;
+}
+
+#target td,
+#target th {
+    text-align: end;
+}
+
+.comment {
+    margin-bottom: 1rem;
+}
+
+textarea {
+    font-size: 1.2rem;
+    box-sizing: border-box;
+}
+
+#comment-text-area {
+    width: 100%;
+    resize: none;
+}

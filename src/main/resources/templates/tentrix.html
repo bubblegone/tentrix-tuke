@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<link rel="stylesheet" href="../css/main.css"/>
+<head>
+    <meta charset="UTF-8"/>
+
+    <title>Tentrix</title>
+</head>
+<script type="module" src="../js/index.js"></script>
+<body>
+
+<div id="main">
+    <div id="userControls">
+        <h4 id="user" th:text="${@tentrixController.getUser()}" />
+        <a href="/tentrix/logout"><h4>Log Out</h4></a>
+    </div>
+
+    <nav>
+        <button onclick="window.templateController.showScoreboard()" id="score">Scoreboard</button>
+        <button onclick="window.templateController.showComments()" id="comments">Comments</button>
+        <button onclick="window.templateController.showRating()" id="rating">Rating</button>
+    </nav>
+
+    <div th:utext="${@tentrixController.getHTMLScore()}"/>
+
+    <div id="game">
+    <div>
+        <div id="field" th:utext="${@tentrixController.getHTMLField()}"/>
+        <h2><a href="/tentrix/new">RESTART</a></h2>
+    </div>
+    <div id="controls">
+        <h2 id="state" th:text="${@tentrixController.getHTMLState()}"/>
+        <div id="figures" th:utext="${@tentrixController.getHTMLPick()}"/>
+        <div id="currentFigure" th:utext="${@tentrixController.getHTMLCurrentFigure()}"/>
+    </div>
+    </div>
+</div>
+
+
+<div id="target"></div>
+
+<script type="text/template" id="scoreTemplate">
+    <section>
+        {{#hasRecords}}
+        <h1>Scoreboard</h1>
+        <table>
+            <tr>
+                <th>User</th>
+                <th>Score</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+        {{#data}}
+        <tr>
+            <td>{{player}}</td>
+            <td>{{points}}</td>
+            <td>{{playedOn}}</td>
+            <td>{{playedAt}}</td>
+        </tr>
+        {{/data}}
+        </table>
+        {{/hasRecords}}
+        {{^hasRecords}}
+        <h2>Scoreboard is empty :)</h2>
+        {{/hasRecords}}
+        <button onclick="window.templateController.hide()">Close</button>
+    </section>
+</script>
+
+<script type="text/template" id="commentTemplate">
+    <section>
+        <h1>Comments</h1>
+        <textarea rows="3" id="comment-text-area"></textarea>
+        <button onclick="document.sendComment()">Send comment</button>
+        {{#hasRecords}}
+            {{#data}}
+            <div class="comment">
+                <div>{{player}}</div>
+                <div>{{comment}}</div>
+                <div>{{commentedOn}} {{commentedAt}}</div>
+            </div>
+            {{/data}}
+        {{/hasRecords}}
+        {{^hasRecords}}
+        <h2>No comments found :(</h2>
+        {{/hasRecords}}
+        <button onclick="window.templateController.hide()">Close</button>
+    </section>
+</script>
+
+<script type="text/template" id="ratingTemplate">
+    <section>
+        {{#hasRecords}}
+        {{#data}}
+        <h1>Rating</h1>
+        <h3>Average: {{avgRating}}</h3>
+        <h3>Your: {{myRating}}</h3>
+        {{/data}}
+        <label for="set-rating">Set rating:</label>
+        <input id="set-rating">
+        <button onclick="document.setRating()">Rate</button>
+        <button onClick="window.templateController.hide()">Close</button>
+        {{/hasRecords}}
+    </section>
+</script>
+
+</body>
+</html>

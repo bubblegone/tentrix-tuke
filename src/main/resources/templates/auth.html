@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<link rel="stylesheet" href="../css/main.css"/>
+<head>
+    <meta charset="UTF-8"/>
+
+    <title>Tentrix</title>
+    <style>
+        body {
+            margin-top: 1rem;
+        }
+
+        .error {
+            color: red;
+            display: none;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        nav > button {
+            font-size: 1.2rem;
+            width: 40%;
+            padding: 0.5rem;
+        }
+
+        label {
+            font-size: 1rem;
+        }
+
+        input {
+            margin-bottom: 1rem;
+        }
+
+        #SignUpForm {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<h1>Please authenticate</h1>
+
+<nav>
+    <button onclick="
+document.getElementById('SignUpForm').style.display='none';
+document.getElementById('loginForm').style.display='initial';
+"
+    >Log In
+    </button>
+
+    <button onclick="
+document.getElementById('loginForm').style.display='none';
+document.getElementById('SignUpForm').style.display='initial';
+"
+    >Sign Up
+    </button>
+</nav>
+
+<form id="loginForm">
+    <h2>Log In</h2>
+    <div class="error" id="ver-failed">No user with such credentials!<br/></div>
+    <label for="nameLogin">Name</label>
+    <br/>
+    <input id="nameLogin" type="text" required>
+    <br/>
+    <label for="passwordLogin">Password</label>
+    <br/>
+    <input id="passwordLogin" type="password" required>
+    <br/>
+    <button type="submit">Log in</button>
+</form>
+
+<form id="SignUpForm">
+    <h2>Sign Up</h2>
+    <div class="error" id="usr-exists">User already exists!<br/></div>
+    <label for="name">Name</label>
+    <br/>
+    <input id="name" type="text" required>
+    <br/>
+    <label for="password">Password</label>
+    <br/>
+    <input id="password" type="password" required>
+    <br/>
+    <label for="confirmPassword">Confirm password</label>
+    <br/>
+    <input id="confirmPassword" type="password" required>
+    <br/>
+    <div class="error" id="ps-dont-match">Passwords don't match!</div>
+    <button type="submit">Sign Up</button>
+</form>
+</body>
+<script>
+    function check(event) {
+        event.preventDefault();
+        const name = document.getElementById("nameLogin").value;
+        const password = document.getElementById("passwordLogin").value;
+
+        fetch("http://localhost:8080/tentrix/auth/check", {
+            method: "POST",
+            body: JSON.stringify({
+                name: name,
+                password: password
+            }),
+
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        }).then(response => {
+            if (response.ok) {
+                window.location.reload(false);
+            } else {
+                document.getElementById('ver-failed').style.display = "initial";
+            }
+        })
+    }
+
+    function create(event) {
+        event.preventDefault();
+        const name = document.getElementById("name").value;
+        const password = document.getElementById("password").value;
+        const confPassword = document.getElementById("confirmPassword").value;
+        if (password !== confPassword) {
+            document.getElementById('ps-dont-match').style.display = "initial";
+            return;
+        }
+
+        fetch("http://localhost:8080/tentrix/auth/create", {
+            method: "POST",
+            body: JSON.stringify({
+                name: name,
+                password: password
+            }),
+
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        }).then(response => {
+            if (response.ok) {
+                window.location.reload(false);
+            } else {
+                document.getElementById('usr-exists').style.display = "initial";
+            }
+        })
+    }
+
+    document.getElementById("loginForm").addEventListener('submit', (event) => check(event));
+    document.getElementById("SignUpForm").addEventListener('submit', (event) => create(event));
+</script>
+</html>
